@@ -2,6 +2,8 @@
 import path from "path";
 import express from "express";
 
+import { getData } from "./data";
+
 
 
 const PORT = 8080;
@@ -9,9 +11,12 @@ const clientDir = path.resolve(__dirname, "..", "client");
 const publicDir = path.join(clientDir, "dist");
 
 
+
 (async function main() {
     const app = express();
     app.use(express.json());
+
+    app.get("/api/data", async (_req, res) => res.json(await getData()));
 
     app.use(express.static(publicDir));
     // Fallback to index for SPA.
